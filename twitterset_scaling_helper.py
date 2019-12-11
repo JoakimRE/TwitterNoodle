@@ -1,7 +1,15 @@
 import os
 import bz2
 import pickle 
+import generate_dataset
+from zipfile import ZipFile
 
+
+# // joakim test code
+
+s = generate_dataset
+
+s
 
 # // add support for uncompressed vs compressed
 
@@ -36,14 +44,14 @@ class DatasetScalingHelper():
 
 
     def set_dir_output(self, _path):
-        if not os.path.isdir(_path): self.print_warn("output dir: None. aborting"); return
-        if _path[-1] is not "/": _path += "/"
+   #     if not os.path.isdir(_path): self.print_warn("output dir: None. aborting"); return
+   #     if _path[-1] is not "/": _path += "/"
         self.directory_out = _path
 
 
     def set_dir_input(self, _path):
-        if not os.path.isdir(_path): self.print_warn("input dir: None. aborting"); return
-        if _path[-1] is not "/": _path += "/"
+   #     if not os.path.isdir(_path): self.print_warn("input dir: None. aborting"); return
+   #    if _path[-1] is not "/": _path += "/"
         self.directory_in = _path
 
 
@@ -110,7 +118,7 @@ class DatasetScalingHelper():
             # // AA: creates new filename by old filenames, not the same as time attached to tweets.
             filename_start = file_names[0].split(self.format_fn_sep)[0]
             filename_end = file_names[-1].split(self.format_fn_sep)[1]
-            new_file_path = f"{self.directory_out}{filename_start}{self.format_fn_sep}{filename_end}"
+            new_file_path = f"{self.directory_out}{filename_start}{self.format_fn_sep}{filename_end}", "csv"
             if self.format_suffix_zip in new_file_path:
                 new_file_path = new_file_path.split(self.format_suffix_zip)[0]
 
@@ -164,10 +172,53 @@ class DatasetScalingHelper():
     
 
 s = DatasetScalingHelper()
+s.set_dir_input("../DataCollection/DC/")
+s.set_dir_output("../DataCollection/DCMERGE/")
+s.merge_datasets_by_directory(True)
 
-s.set_dir_input("../TestFolder_mergedFromDataColl")
-s.set_dir_output("../TestFolder2_splitFromTestFolder")
-s.split_dataset_by_obj_count(6)
+
+# import zipfile
+# from os import listdir
+# from os.path import isfile, join
+# directory = "../DataCollection/DCMERGE/"
+# onlyfiles = [f for f in listdir(directory) if isfile(join(directory, f))]
+# for o in onlyfiles:
+#     if o.endswith(".zip"):
+#         zip = zipfile.ZipFile(o, 'r')
+#         zip.extractall(directory)
+#         zip.close()            
+
+
+#### // ZIPFILE
+
+
+# dir_name = 'C:/Users/Joakim/Desktop/SkoleTing/Studio/Datacollection/DCMERGE'
+# extension = ".zip"
+
+
+# os.chdir(dir_name)                              # // change directory from working dir to dir with files
+
+# for item in os.listdir(dir_name):               # // loop through items in dir
+#     if item.endswith(extension):                # // check for ".zip" extension
+#         file_name = os.path.abspath(item)       # // get full path of files
+#         print("print", file_name)               # // print file name for dev sake
+#         zip_ref = zipfile.ZipFile(file_name)    # // create zipfile object
+#         zip_ref.extractall(dir_name)            # // extract file to dir
+#         zip_ref.close()                         # // close file
+#         os.remove(file_name)                    # // delete zipped file
+# #file_name = dir_name + "/" + item
+
+
+
+        
+### // Check dir
+# file_names = s.get_filenames_inin_dir()
+# for x in file_names:
+#    print(file_names)
+
+#s.set_dir_input("../TestFolder_mergedFromDataColl")
+#s.set_dir_output("../TestFolder2_splitFromTestFolder")
+# s.split_dataset_by_obj_count(6)
 
 
 
